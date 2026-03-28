@@ -16,8 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Xenia Canary - Compatibility List",
+  title: "Xenia Game Compatibility",
   description: "Browse Xbox 360 game compatibility status for Xenia Canary",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
