@@ -107,14 +107,19 @@ Renders TOML settings with syntax highlighting:
 
 ## Data Sources
 
+The application uses GitHub Pages as the primary source with Raw GitHub as a backup fallback.
+
 ### Game Compatibility
-- **URL**: `https://raw.githubusercontent.com/xenia-manager/database/refs/heads/main/data/game-compatibility/canary.json`
+- **Primary URL**: `https://xenia-manager.github.io/database/data/game-compatibility/canary.json`
+- **Backup URL**: `https://raw.githubusercontent.com/xenia-manager/database/refs/heads/main/data/game-compatibility/canary.json`
 - **Format**: Array of game objects
 - **Fields**: issue, id, title, updated, state, labels, url
 
 ### Optimized Settings
-- **List URL**: `https://raw.githubusercontent.com/xenia-manager/optimized-settings/refs/heads/refactor/toml-update/data/settings.json`
-- **Settings URL**: `https://raw.githubusercontent.com/xenia-manager/optimized-settings/refs/heads/refactor/toml-update/settings/{GAME_ID}.toml`
+- **List Primary URL**: `https://xenia-manager.github.io/optimized-settings/data/settings.json`
+- **List Backup URL**: `https://raw.githubusercontent.com/xenia-manager/optimized-settings/refs/heads/main/data/settings.json`
+- **Settings Primary URL**: `https://xenia-manager.github.io/optimized-settings/settings/{GAME_ID}.toml`
+- **Settings Backup URL**: `https://raw.githubusercontent.com/xenia-manager/optimized-settings/refs/heads/main/settings/{GAME_ID}.toml`
 - **Format**: TOML files with sections and key-value pairs
 
 ## Theme System

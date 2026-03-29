@@ -11,6 +11,7 @@ import GameCompatibilityTable from "./GameCompatibilityTable";
 import StateFilterBar from "./StateFilterBar";
 import CustomSelect from "./CustomSelect";
 import LetterFilterBar from "./LetterFilterBar";
+import { fetchWithFallback, FETCH_CONFIGS } from "@/lib/fetchWithFallback";
 
 type SortColumn = "title" | "state" | "updated" | null;
 type SortDirection = "asc" | "desc";
@@ -44,20 +45,9 @@ export default function GameCompatibilityList() {
     async function fetchData() {
       try {
         const [gamesResponse, settingsResponse] = await Promise.all([
-          fetch(
-            "https://raw.githubusercontent.com/xenia-manager/database/refs/heads/main/data/game-compatibility/canary.json",
-          ),
-          fetch(
-            "https://raw.githubusercontent.com/xenia-manager/optimized-settings/refs/heads/refactor/toml-update/data/settings.json",
-          ),
+          fetchWithFallback(FETCH_CONFIGS.gameCompatibility),
+          fetchWithFallback(FETCH_CONFIGS.optimizedSettingsList),
         ]);
-
-        if (!gamesResponse.ok) {
-          throw new Error("Failed to fetch game compatibility data");
-        }
-        if (!settingsResponse.ok) {
-          throw new Error("Failed to fetch optimized settings");
-        }
 
         const gamesData = await gamesResponse.json();
         const settingsData = await settingsResponse.json();

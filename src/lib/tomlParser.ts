@@ -1,4 +1,5 @@
 import { SettingSection, SettingEntry } from "@/lib/types";
+import { fetchWithFallback, getSettingsConfig } from "@/lib/fetchWithFallback";
 
 /**
  * Parse TOML content into structured sections and entries
@@ -89,17 +90,14 @@ export function parseToml(tomlContent: string): SettingSection[] {
  * @remarks
  * Fetches from: xenia-manager/optimized-settings/settings/{gameId}.toml
  * Game IDs are converted to uppercase for the URL
+ * Uses GitHub Pages as primary, Raw GitHub as backup
  */
 export async function fetchOptimizedSettings(
   gameId: string,
 ): Promise<SettingSection[] | null> {
   try {
-    const response = await fetch(
-      `https://raw.githubusercontent.com/xenia-manager/optimized-settings/refs/heads/refactor/toml-update/settings/${gameId.toUpperCase()}.toml`,
-    );
-    if (!response.ok) {
-      return null;
-    }
+    const config = getSettingsConfig(gameId);
+    const response = await fetchWithFallback(config);
     const tomlContent = await response.text();
     return parseToml(tomlContent);
   } catch (error) {

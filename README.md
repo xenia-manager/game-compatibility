@@ -60,8 +60,13 @@ bun dev
 
 The application fetches data from:
 
-- **Game Compatibility**: [xenia-canary/game-compatibility](https://github.com/xenia-canary/game-compatibility/) (Parsed by [Xenia Manager's Database repository](https://raw.githubusercontent.com/xenia-manager/database/refs/heads/main/data/game-compatibility/canary.json))
+- **Game Compatibility**: [xenia-canary/game-compatibility](https://github.com/xenia-canary/game-compatibility/)
+  - Primary: `https://xenia-manager.github.io/database/data/game-compatibility/canary.json`
+  - Backup: `https://raw.githubusercontent.com/xenia-manager/database/refs/heads/main/data/game-compatibility/canary.json`
 - **Optimized Settings**: [xenia-manager/optimized-settings](https://github.com/xenia-manager/optimized-settings)
+  - List Primary: `https://xenia-manager.github.io/optimized-settings/data/settings.json`
+  - List Backup: `https://raw.githubusercontent.com/xenia-manager/optimized-settings/refs/heads/main/data/settings.json`
+  - Settings: `https://xenia-manager.github.io/optimized-settings/settings/{GAME_ID}.toml` (with Raw GitHub backup)
 
 ## Project Structure
 
