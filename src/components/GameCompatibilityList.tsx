@@ -365,10 +365,10 @@ export default function GameCompatibilityList() {
                   <button
                     key={page}
                     onClick={() => goToPage(page as number)}
-                    className={`px-2.5 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 ${
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${
                       currentPage === page
-                        ? "btn-xbox"
-                        : "bg-white/10 hover:bg-white/15 text-fluent-primary"
+                        ? "btn-xbox hover:scale-105 border border-xbox-green"
+                        : "bg-white/10 hover:bg-white/15 text-fluent-primary hover:scale-105 border border-[var(--border-color)]"
                     }`}
                   >
                     {page}
