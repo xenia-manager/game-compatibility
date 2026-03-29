@@ -16,12 +16,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Detect if running in GitHub Actions
+const isGitHubActions = process.env.GITHUB_ACTIONS === "true";
+const basePath = isGitHubActions ? "/game-compatibility" : "";
+
 export const metadata: Metadata = {
   title: "Xenia Game Compatibility",
   description: "Browse Xbox 360 game compatibility status for Xenia Canary",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
@@ -36,6 +37,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link rel="icon" href={`${basePath}/favicon.ico`} />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function() {
