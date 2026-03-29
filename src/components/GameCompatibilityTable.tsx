@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, Fragment } from "react";
-import { GameCompatibility, OptimizedSettingGame } from "@/lib/types";
+import { GameCompatibility, OptimizedSettingGame, SettingSection } from "@/lib/types";
 import { fetchOptimizedSettings } from "@/lib/tomlParser";
 import TomlDisplay from "./TomlDisplay";
 
