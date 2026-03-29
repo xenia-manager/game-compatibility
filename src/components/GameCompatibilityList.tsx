@@ -77,7 +77,7 @@ export default function GameCompatibilityList() {
       }
 
       // Search filter
-      const searchLower = searchValue.toLowerCase();
+      const searchLower = searchValue.toLowerCase().trim();
       const inTitle = game.title.toLowerCase().includes(searchLower);
       const inId = game.id.toLowerCase().includes(searchLower);
       const matchesSearch = searchValue === "" || inTitle || inId;
