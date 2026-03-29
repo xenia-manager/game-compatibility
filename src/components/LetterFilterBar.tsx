@@ -42,35 +42,47 @@ export default function LetterFilterBar({
   onLetterFilterChange,
 }: LetterFilterBarProps) {
   return (
-    <div className="flex flex-wrap gap-0 mb-3 w-full">
-      <div className="inline-flex rounded-full overflow-hidden border w-full border-[var(--border-color)]">
-        {letters.map((letter, index) => {
-          const isSelected = letterFilter === letter;
-          const isLast = index === letters.length - 1;
+    <div className="mb-3 w-full">
+      <div className="flex flex-wrap gap-1 rounded-xl overflow-hidden border border-[var(--border-color)] p-1">
+        {/* "All" button */}
+        <button
+          onClick={() => onLetterFilterChange("")}
+          className={`flex-none px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 rounded-lg ${
+            letterFilter === ""
+              ? "bg-xbox-button text-white"
+              : "bg-[var(--bg-secondary)] text-fluent-secondary hover:bg-[var(--hover-bg)]"
+          }`}
+        >
+          All
+        </button>
 
-          return (
-            <button
-              key={letter || "all"}
-              onClick={() => onLetterFilterChange(letter)}
-              className={`flex-1 px-1.5 py-1.5 text-xs font-semibold transition-all duration-200 min-w-[24px] ${
-                isSelected
-                  ? "bg-xbox-button text-white"
-                  : "bg-[var(--bg-secondary)] text-fluent-secondary hover:bg-[var(--hover-bg)]"
-              } ${!isLast ? "border-r border-[var(--border-color)]" : ""}`}
-              title={
-                letter === ""
-                  ? "All letters"
-                  : letter === "0-9"
+        {/* Letter buttons - wrap on mobile */}
+        {letters
+          .filter((l) => l !== "")
+          .map((letter, index) => {
+            const isSelected = letterFilter === letter;
+
+            return (
+              <button
+                key={letter}
+                onClick={() => onLetterFilterChange(letter)}
+                className={`flex-none px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 min-w-[36px] sm:min-w-[40px] flex items-center justify-center rounded-lg ${
+                  isSelected
+                    ? "bg-xbox-button text-white"
+                    : "bg-[var(--bg-secondary)] text-fluent-secondary hover:bg-[var(--hover-bg)]"
+                }`}
+                title={
+                  letter === "0-9"
                     ? "Numbers"
                     : letter === "!"
                       ? "Special characters"
                       : letter
-              }
-            >
-              {letter === "" ? "All" : letter}
-            </button>
-          );
-        })}
+                }
+              >
+                {letter}
+              </button>
+            );
+          })}
       </div>
     </div>
   );

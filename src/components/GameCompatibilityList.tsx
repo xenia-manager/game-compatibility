@@ -248,11 +248,11 @@ export default function GameCompatibilityList() {
 
   return (
     <>
-      <section className="rounded-2xl p-6 mica-card">
+      <section className="rounded-2xl p-4 sm:p-6 mica-card">
         <div className="flex flex-col gap-3">
           {/* Search bar */}
-          <div className="flex flex-wrap gap-3 items-end">
-            <div className="flex-1 min-w-[200px]">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 items-end">
+            <div className="flex-1 min-w-[200px] w-full sm:w-auto">
               <label className="block text-xs font-medium mb-1.5 text-fluent-secondary">
                 Search
               </label>
@@ -276,7 +276,7 @@ export default function GameCompatibilityList() {
               </div>
             </div>
 
-            <div>
+            <div className="w-full sm:w-auto">
               <label className="block text-xs font-medium mb-1.5 text-fluent-secondary">
                 Results per page
               </label>
@@ -287,17 +287,17 @@ export default function GameCompatibilityList() {
                 }))}
                 value={pageSize}
                 onChange={(val) => setPageSize(Number(val))}
-                className="min-w-[130px]"
+                className="min-w-[130px] w-full sm:w-auto"
               />
             </div>
 
-            <div>
+            <div className="w-full sm:w-auto">
               <label className="block text-xs font-medium mb-1.5 opacity-0 pointer-events-none text-fluent-secondary">
                 Clear
               </label>
               <button
                 onClick={handleClear}
-                className="btn-xbox transition-all duration-200 min-w-[80px] text-sm py-2 px-3 hover:!transform-none hover:!translate-y-0"
+                className="btn-xbox transition-all duration-200 min-w-[80px] w-full sm:w-auto text-sm py-2 px-3 hover:!transform-none hover:!translate-y-0"
               >
                 Clear
               </button>
@@ -334,11 +334,11 @@ export default function GameCompatibilityList() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-1.5 mt-4">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 mt-4">
             <button
               onClick={() => goToPage(1)}
               disabled={currentPage === 1}
-              className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
+              className="px-2.5 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
               aria-label="First page"
             >
               ««
@@ -346,7 +346,7 @@ export default function GameCompatibilityList() {
             <button
               onClick={() => goToPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
+              className="px-2.5 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
               aria-label="Previous page"
             >
               «
@@ -365,7 +365,11 @@ export default function GameCompatibilityList() {
                   <button
                     key={page}
                     onClick={() => goToPage(page as number)}
-                    className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-white/10 hover:bg-white/15 text-fluent-primary aria-selected:btn-xbox"
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 ${
+                      currentPage === page
+                        ? "btn-xbox"
+                        : "bg-white/10 hover:bg-white/15 text-fluent-primary"
+                    }`}
                   >
                     {page}
                   </button>
@@ -376,7 +380,7 @@ export default function GameCompatibilityList() {
             <button
               onClick={() => goToPage(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
+              className="px-2.5 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
               aria-label="Next page"
             >
               »
@@ -384,7 +388,7 @@ export default function GameCompatibilityList() {
             <button
               onClick={() => goToPage(totalPages)}
               disabled={currentPage === totalPages}
-              className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
+              className="px-2.5 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
               aria-label="Last page"
             >
               »»

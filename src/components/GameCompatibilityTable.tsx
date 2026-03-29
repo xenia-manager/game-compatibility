@@ -162,12 +162,12 @@ export default function GameCompatibilityTable({
 
   if (games.length === 0) {
     return (
-      <div className="text-center py-12">
-        <div className="text-5xl mb-4">🎮</div>
-        <p className="text-fluent-secondary text-lg mb-2">
+      <div className="text-center py-12 px-4">
+        <div className="text-4xl sm:text-5xl mb-4">🎮</div>
+        <p className="text-fluent-secondary text-base sm:text-lg mb-2">
           No games found
         </p>
-        <p className="text-fluent-secondary">
+        <p className="text-fluent-secondary text-sm sm:text-base">
           Try adjusting your search or filter criteria
         </p>
       </div>
@@ -176,10 +176,10 @@ export default function GameCompatibilityTable({
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full">
+      <table className="w-full min-w-[350px]">
         <thead>
           <tr className="border-b border-[var(--table-border)]">
-            <th className="text-left py-3 px-4 font-semibold text-fluent-secondary" style={{ width: "100px" }}>
+            <th className="text-left py-3 px-2 sm:px-4 font-semibold text-fluent-secondary text-xs sm:text-sm whitespace-nowrap" style={{ width: "60px" }}>
               ID
             </th>
             <SortableHeader
@@ -187,7 +187,8 @@ export default function GameCompatibilityTable({
               currentSort={sortColumn}
               direction={sortDirection}
               onSort={onSort}
-              width="40%"
+              width="45%"
+              className="text-xs sm:text-sm"
             >
               Title
             </SortableHeader>
@@ -196,7 +197,8 @@ export default function GameCompatibilityTable({
               currentSort={sortColumn}
               direction={sortDirection}
               onSort={onSort}
-              width="120px"
+              width="70px"
+              className="text-xs sm:text-sm"
             >
               State
             </SortableHeader>
@@ -205,11 +207,12 @@ export default function GameCompatibilityTable({
               currentSort={sortColumn}
               direction={sortDirection}
               onSort={onSort}
-              width="130px"
+              width="100px"
+              className="hidden md:table-cell text-xs sm:text-sm"
             >
               Updated
             </SortableHeader>
-            <th className="text-left py-3 px-4 font-semibold text-fluent-primary" style={{ width: "100px" }}></th>
+            <th className="text-left py-3 px-2 sm:px-4 font-semibold text-fluent-primary text-xs sm:text-sm whitespace-nowrap" style={{ width: "45px" }}></th>
           </tr>
         </thead>
         <tbody>
@@ -226,15 +229,15 @@ export default function GameCompatibilityTable({
                     isExpanded ? "bg-[var(--table-hover)]" : "hover:bg-[var(--table-hover)]"
                   }`}
                 >
-                  <td className="py-3 px-4">
-                    <code className="font-mono text-sm text-fluent-secondary">
+                  <td className="py-3 px-2 sm:px-4 align-top">
+                    <code className="font-mono text-[10px] sm:text-sm text-fluent-secondary whitespace-nowrap">
                       {game.id}
                     </code>
                   </td>
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-2 sm:px-4 max-w-[60px] sm:max-w-none align-top">
                     <button
                       onClick={() => handleTitleClick(game.id, game.issue)}
-                      className={`text-left font-medium transition-colors duration-200 ${
+                      className={`text-left font-medium transition-colors duration-200 text-xs sm:text-sm block break-words line-clamp-3 ${
                         hasSettings
                           ? "text-xbox-green hover:text-xbox-accent cursor-pointer"
                           : "text-fluent-primary"
@@ -249,9 +252,9 @@ export default function GameCompatibilityTable({
                       {game.title}
                     </button>
                   </td>
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-3 sm:px-4">
                     <span
-                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold"
+                      className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold"
                       style={{
                         backgroundColor: `${getStateColor(game.state)}20`,
                         color: getStateColor(game.state),
@@ -259,24 +262,31 @@ export default function GameCompatibilityTable({
                       }}
                       title={getStateDescription(game.state)}
                     >
-                      <span
-                        className="w-2 h-2 rounded-full"
-                        style={{ backgroundColor: getStateColor(game.state) }}
-                      />
-                      {getStateLabel(game.state)}
+                      <span className="text-[10px] sm:text-xs">
+                        {game.state === "Playable"
+                          ? "✓"
+                          : game.state === "Gameplay"
+                            ? "▶"
+                            : game.state === "Loads"
+                              ? "⏻"
+                              : game.state === "Unplayable"
+                                ? "✕"
+                                : "?"}
+                      </span>
+                      <span className="hidden sm:inline">{getStateLabel(game.state)}</span>
                     </span>
                   </td>
-                  <td className="py-3 px-4">
-                    <span className="text-sm text-fluent-secondary">
+                  <td className="py-3 px-3 sm:px-4 hidden sm:table-cell">
+                    <span className="text-xs sm:text-sm text-fluent-secondary">
                       {formatDate(game.updated)}
                     </span>
                   </td>
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-3 sm:px-4">
                     <a
                       href={game.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="link-style text-sm font-medium"
+                      className="link-style text-xs sm:text-sm font-medium"
                     >
                       #{game.issue}
                     </a>
@@ -284,26 +294,19 @@ export default function GameCompatibilityTable({
                 </tr>
                 {isExpanded && (
                   <tr>
-                    <td colSpan={5} className="py-4 px-4">
-                      {isLoading ? (
-                        <div className="flex items-center gap-2 py-4">
-                          <div className="spinner"></div>
-                          <span className="text-fluent-secondary">
-                            Loading optimized settings...
-                          </span>
-                        </div>
-                      ) : sections ? (
-                        <TomlDisplay
-                          sections={sections}
-                          lastModified={
-                            getOptimizedGame(game.id)?.last_modified
-                          }
-                        />
-                      ) : (
-                        <p className="text-fluent-secondary">
-                          Failed to load settings
-                        </p>
-                      )}
+                    <td colSpan={4} className="py-0 px-0 align-top md:hidden">
+                      <ExpandedContent
+                        isLoading={isLoading}
+                        sections={sections}
+                        lastModified={getOptimizedGame(game.id)?.last_modified}
+                      />
+                    </td>
+                    <td colSpan={5} className="py-0 px-0 align-top hidden md:table-cell">
+                      <ExpandedContent
+                        isLoading={isLoading}
+                        sections={sections}
+                        lastModified={getOptimizedGame(game.id)?.last_modified}
+                      />
                     </td>
                   </tr>
                 )}
@@ -312,6 +315,35 @@ export default function GameCompatibilityTable({
           })}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+function ExpandedContent({
+  isLoading,
+  sections,
+  lastModified,
+}: {
+  isLoading: boolean;
+  sections?: SettingSection[];
+  lastModified?: string;
+}) {
+  return (
+    <div className="overflow-x-auto pr-2 sm:pr-4 pt-4 pb-2">
+      {isLoading ? (
+        <div className="flex items-center gap-2 py-4">
+          <div className="spinner"></div>
+          <span className="text-fluent-secondary text-sm">
+            Loading optimized settings...
+          </span>
+        </div>
+      ) : sections ? (
+        <div className="mb-4">
+          <TomlDisplay sections={sections} lastModified={lastModified} />
+        </div>
+      ) : (
+        <p className="text-fluent-secondary text-sm pb-4">Failed to load settings</p>
+      )}
     </div>
   );
 }
