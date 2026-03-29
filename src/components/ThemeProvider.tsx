@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 
 type Theme = "dark" | "light";
 
@@ -16,33 +23,50 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
+    // Initialize theme from localStorage or system preference
+    const savedTheme = localStorage.getItem("theme") as Theme | null;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+
+    // Set theme immediately before first render
+    document.documentElement.classList.add(initialTheme);
+    document.documentElement.style.colorScheme = initialTheme;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setTheme(initialTheme);
     setMounted(true);
   }, []);
 
   useEffect(() => {
-    if (mounted) {
-      document.documentElement.classList.remove("dark", "light");
-      document.documentElement.classList.add(theme);
-      document.documentElement.style.colorScheme = theme;
-      localStorage.setItem("theme", theme);
-      document.body.className =
-        theme === "dark"
-          ? "min-h-screen bg-dark-primary text-fluent-neutral-dark"
-          : "min-h-screen bg-light-primary text-gray-900";
-    }
+    if (!mounted) return;
+
+    // Update theme class and CSS variables on document element
+    document.documentElement.classList.remove("dark", "light");
+    document.documentElement.classList.add(theme);
+    document.documentElement.style.colorScheme = theme;
+    localStorage.setItem("theme", theme);
+
+    // Update body classes
+    document.body.className =
+      theme === "dark"
+        ? "min-h-screen text-fluent-neutral-dark"
+        : "min-h-screen text-gray-900";
   }, [theme, mounted]);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
+  }, []);
+
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(
+    () => ({ theme, toggleTheme }),
+    [theme, toggleTheme],
+  );
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className={theme}>{children}</div>
+    <ThemeContext.Provider value={contextValue}>
+      <div className={`theme-transition ${theme}`}>{children}</div>
     </ThemeContext.Provider>
   );
 }

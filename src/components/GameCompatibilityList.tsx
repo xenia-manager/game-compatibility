@@ -6,7 +6,6 @@ import {
   OptimizedSettingGame,
   getStateSortValue,
 } from "@/lib/types";
-import { useTheme } from "./ThemeProvider";
 import GameCompatibilityTable from "./GameCompatibilityTable";
 import StateFilterBar from "./StateFilterBar";
 import CustomSelect from "./CustomSelect";
@@ -20,7 +19,6 @@ const DEFAULT_PAGE_SIZE = 25;
 const PAGE_SIZE_OPTIONS = [25, 50, 100, 200];
 
 export default function GameCompatibilityList() {
-  const { theme } = useTheme();
   const [allGames, setAllGames] = useState<GameCompatibility[]>([]);
   const [optimizedGames, setOptimizedGames] = useState<OptimizedSettingGame[]>(
     [],
@@ -223,16 +221,10 @@ export default function GameCompatibilityList() {
 
   if (loading) {
     return (
-      <div
-        className={`text-center rounded-2xl p-12 ${
-          theme === "dark" ? "mica-card-dark" : "mica-card-light"
-        }`}
-      >
+      <div className="text-center rounded-2xl p-12 mica-card">
         <div className="flex flex-col items-center justify-center">
           <div className="spinner mb-4"></div>
-          <div
-            className={`${theme === "dark" ? "text-fluent-neutral" : "text-gray-600"} text-lg`}
-          >
+          <div className="text-fluent-secondary text-lg">
             Loading game compatibility data...
           </div>
         </div>
@@ -242,11 +234,7 @@ export default function GameCompatibilityList() {
 
   if (error) {
     return (
-      <div
-        className={`rounded-2xl p-8 ${
-          theme === "dark" ? "mica-card-dark" : "mica-card-light"
-        }`}
-      >
+      <div className="rounded-2xl p-8 mica-card">
         <div className="notification notification-error">
           <span className="text-xl">⚠️</span>
           <div>
@@ -260,20 +248,12 @@ export default function GameCompatibilityList() {
 
   return (
     <>
-      <section
-        className={`rounded-2xl p-6 ${
-          theme === "dark" ? "mica-card-dark" : "mica-card-light"
-        }`}
-      >
+      <section className="rounded-2xl p-6 mica-card">
         <div className="flex flex-col gap-3">
           {/* Search bar */}
           <div className="flex flex-wrap gap-3 items-end">
             <div className="flex-1 min-w-[200px]">
-              <label
-                className={`block text-xs font-medium mb-1.5 ${
-                  theme === "dark" ? "text-fluent-neutral" : "text-gray-600"
-                }`}
-              >
+              <label className="block text-xs font-medium mb-1.5 text-fluent-secondary">
                 Search
               </label>
               <div className="relative">
@@ -287,11 +267,7 @@ export default function GameCompatibilityList() {
                 {searchValue && (
                   <button
                     onClick={() => setSearchValue("")}
-                    className={`absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full transition-colors ${
-                      theme === "dark"
-                        ? "text-fluent-neutral hover:bg-white/10"
-                        : "text-gray-500 hover:bg-black/10"
-                    }`}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full transition-colors text-fluent-secondary hover:bg-white/10"
                     aria-label="Clear search"
                   >
                     ✕
@@ -301,11 +277,7 @@ export default function GameCompatibilityList() {
             </div>
 
             <div>
-              <label
-                className={`block text-xs font-medium mb-1.5 ${
-                  theme === "dark" ? "text-fluent-neutral" : "text-gray-600"
-                }`}
-              >
+              <label className="block text-xs font-medium mb-1.5 text-fluent-secondary">
                 Results per page
               </label>
               <CustomSelect
@@ -320,7 +292,7 @@ export default function GameCompatibilityList() {
             </div>
 
             <div>
-              <label className="block text-xs font-medium mb-1.5 opacity-0 pointer-events-none">
+              <label className="block text-xs font-medium mb-1.5 opacity-0 pointer-events-none text-fluent-secondary">
                 Clear
               </label>
               <button
@@ -366,13 +338,7 @@ export default function GameCompatibilityList() {
             <button
               onClick={() => goToPage(1)}
               disabled={currentPage === 1}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
-                currentPage === 1
-                  ? "opacity-50 cursor-not-allowed bg-gray-500"
-                  : theme === "dark"
-                    ? "bg-dark-accent hover:bg-dark-accent/80"
-                    : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
               aria-label="First page"
             >
               ««
@@ -380,13 +346,7 @@ export default function GameCompatibilityList() {
             <button
               onClick={() => goToPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
-                currentPage === 1
-                  ? "opacity-50 cursor-not-allowed bg-gray-500"
-                  : theme === "dark"
-                    ? "bg-dark-accent hover:bg-dark-accent/80"
-                    : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
               aria-label="Previous page"
             >
               «
@@ -397,9 +357,7 @@ export default function GameCompatibilityList() {
                 page === "..." ? (
                   <span
                     key={`ellipsis-${index}`}
-                    className={`px-2 py-1.5 text-xs ${
-                      theme === "dark" ? "text-fluent-neutral" : "text-gray-500"
-                    }`}
+                    className="px-2 py-1.5 text-xs text-fluent-secondary"
                   >
                     ...
                   </span>
@@ -407,13 +365,7 @@ export default function GameCompatibilityList() {
                   <button
                     key={page}
                     onClick={() => goToPage(page as number)}
-                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
-                      currentPage === page
-                        ? "btn-xbox"
-                        : theme === "dark"
-                          ? "bg-dark-accent hover:bg-dark-accent/80 text-fluent-neutral-dark"
-                          : "bg-gray-200 hover:bg-gray-300 text-gray-900"
-                    }`}
+                    className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-white/10 hover:bg-white/15 text-fluent-primary aria-selected:btn-xbox"
                   >
                     {page}
                   </button>
@@ -424,13 +376,7 @@ export default function GameCompatibilityList() {
             <button
               onClick={() => goToPage(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
-                currentPage === totalPages
-                  ? "opacity-50 cursor-not-allowed bg-gray-500"
-                  : theme === "dark"
-                    ? "bg-dark-accent hover:bg-dark-accent/80"
-                    : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
               aria-label="Next page"
             >
               »
@@ -438,13 +384,7 @@ export default function GameCompatibilityList() {
             <button
               onClick={() => goToPage(totalPages)}
               disabled={currentPage === totalPages}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
-                currentPage === totalPages
-                  ? "opacity-50 cursor-not-allowed bg-gray-500"
-                  : theme === "dark"
-                    ? "bg-dark-accent hover:bg-dark-accent/80"
-                    : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-500 bg-white/10 hover:bg-white/15"
               aria-label="Last page"
             >
               »»

@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, Fragment } from "react";
-import { useTheme } from "./ThemeProvider";
+import { useState, Fragment } from "react";
 import { GameCompatibility, OptimizedSettingGame } from "@/lib/types";
-import { fetchOptimizedSettings, parseToml } from "@/lib/tomlParser";
+import { fetchOptimizedSettings } from "@/lib/tomlParser";
 import TomlDisplay from "./TomlDisplay";
 
 type SortColumn = "title" | "state" | "updated" | null;
@@ -93,14 +92,11 @@ function SortableHeader({
   className = "",
   width,
 }: SortableHeaderProps) {
-  const { theme } = useTheme();
   const isActive = currentSort === column;
 
   return (
     <th
-      className={`text-left py-3 px-4 font-semibold cursor-pointer hover:opacity-80 transition-opacity ${
-        theme === "dark" ? "text-fluent-neutral-dark" : "text-gray-900"
-      } ${className}`}
+      className={`text-left py-3 px-4 font-semibold cursor-pointer hover:opacity-80 transition-opacity text-fluent-primary ${className}`}
       style={{ width }}
       onClick={() => onSort(column)}
     >
@@ -121,10 +117,9 @@ export default function GameCompatibilityTable({
   onSort,
   optimizedGames,
 }: GameCompatibilityTableProps) {
-  const { theme } = useTheme();
   const [expandedIssues, setExpandedIssues] = useState<Set<number>>(new Set());
   const [loadingSettings, setLoadingSettings] = useState<number | null>(null);
-  const [settingsCache, setSettingsCache] = useState<Record<string, any>>({});
+  const [settingsCache, setSettingsCache] = useState<Record<string, SettingSection[]>>({});
 
   const hasOptimizedSettings = (gameId: string) => {
     return optimizedGames.some((g) => g.id === gameId);
@@ -132,14 +127,6 @@ export default function GameCompatibilityTable({
 
   const getOptimizedGame = (gameId: string) => {
     return optimizedGames.find((g) => g.id === gameId);
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
   };
 
   const handleTitleClick = async (gameId: string, issue: number) => {
@@ -177,14 +164,10 @@ export default function GameCompatibilityTable({
     return (
       <div className="text-center py-12">
         <div className="text-5xl mb-4">🎮</div>
-        <p
-          className={`${theme === "dark" ? "text-fluent-neutral" : "text-gray-500"} text-lg mb-2`}
-        >
+        <p className="text-fluent-secondary text-lg mb-2">
           No games found
         </p>
-        <p
-          className={`${theme === "dark" ? "text-fluent-neutral" : "text-gray-500"}`}
-        >
+        <p className="text-fluent-secondary">
           Try adjusting your search or filter criteria
         </p>
       </div>
@@ -195,17 +178,8 @@ export default function GameCompatibilityTable({
     <div className="overflow-x-auto">
       <table className="w-full">
         <thead>
-          <tr
-            className={`border-b ${
-              theme === "dark" ? "border-gray-700" : "border-gray-200"
-            }`}
-          >
-            <th
-              className={`text-left py-3 px-4 font-semibold ${
-                theme === "dark" ? "text-fluent-neutral" : "text-gray-600"
-              }`}
-              style={{ width: "100px" }}
-            >
+          <tr className="border-b border-[var(--table-border)]">
+            <th className="text-left py-3 px-4 font-semibold text-fluent-secondary" style={{ width: "100px" }}>
               ID
             </th>
             <SortableHeader
@@ -235,12 +209,7 @@ export default function GameCompatibilityTable({
             >
               Updated
             </SortableHeader>
-            <th
-              className={`text-left py-3 px-4 font-semibold ${
-                theme === "dark" ? "text-fluent-neutral-dark" : "text-gray-900"
-              }`}
-              style={{ width: "100px" }}
-            ></th>
+            <th className="text-left py-3 px-4 font-semibold text-fluent-primary" style={{ width: "100px" }}></th>
           </tr>
         </thead>
         <tbody>
@@ -253,20 +222,12 @@ export default function GameCompatibilityTable({
             return (
               <Fragment key={game.issue}>
                 <tr
-                  className={`border-b transition-colors duration-200 ${
-                    theme === "dark"
-                      ? "border-gray-800 hover:bg-white/5"
-                      : "border-gray-100 hover:bg-black/5"
-                  } ${isExpanded ? (theme === "dark" ? "bg-white/5" : "bg-black/5") : ""}`}
+                  className={`border-b transition-colors duration-200 border-[var(--table-border)] ${
+                    isExpanded ? "bg-[var(--table-hover)]" : "hover:bg-[var(--table-hover)]"
+                  }`}
                 >
                   <td className="py-3 px-4">
-                    <code
-                      className={`font-mono text-sm ${
-                        theme === "dark"
-                          ? "text-fluent-neutral"
-                          : "text-gray-600"
-                      }`}
-                    >
+                    <code className="font-mono text-sm text-fluent-secondary">
                       {game.id}
                     </code>
                   </td>
@@ -275,12 +236,8 @@ export default function GameCompatibilityTable({
                       onClick={() => handleTitleClick(game.id, game.issue)}
                       className={`text-left font-medium transition-colors duration-200 ${
                         hasSettings
-                          ? theme === "dark"
-                            ? "text-xbox-green hover:text-xbox-accent cursor-pointer"
-                            : "text-xbox-button hover:text-xbox-hover cursor-pointer"
-                          : theme === "dark"
-                            ? "text-fluent-neutral-dark"
-                            : "text-gray-900"
+                          ? "text-xbox-green hover:text-xbox-accent cursor-pointer"
+                          : "text-fluent-primary"
                       }`}
                       disabled={!hasSettings}
                       title={
@@ -310,13 +267,7 @@ export default function GameCompatibilityTable({
                     </span>
                   </td>
                   <td className="py-3 px-4">
-                    <span
-                      className={`text-sm ${
-                        theme === "dark"
-                          ? "text-fluent-neutral"
-                          : "text-gray-600"
-                      }`}
-                    >
+                    <span className="text-sm text-fluent-secondary">
                       {formatDate(game.updated)}
                     </span>
                   </td>
@@ -337,13 +288,7 @@ export default function GameCompatibilityTable({
                       {isLoading ? (
                         <div className="flex items-center gap-2 py-4">
                           <div className="spinner"></div>
-                          <span
-                            className={
-                              theme === "dark"
-                                ? "text-fluent-neutral"
-                                : "text-gray-600"
-                            }
-                          >
+                          <span className="text-fluent-secondary">
                             Loading optimized settings...
                           </span>
                         </div>
@@ -355,13 +300,7 @@ export default function GameCompatibilityTable({
                           }
                         />
                       ) : (
-                        <p
-                          className={
-                            theme === "dark"
-                              ? "text-fluent-neutral"
-                              : "text-gray-600"
-                          }
-                        >
+                        <p className="text-fluent-secondary">
                           Failed to load settings
                         </p>
                       )}

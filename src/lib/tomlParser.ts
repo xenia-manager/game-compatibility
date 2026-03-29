@@ -1,4 +1,4 @@
-import { SettingSection, SettingEntry } from "@/lib/types";
+import { SettingSection } from "@/lib/types";
 import { fetchWithFallback, getSettingsConfig } from "@/lib/fetchWithFallback";
 
 /**
@@ -46,7 +46,7 @@ export function parseToml(tomlContent: string): SettingSection[] {
     if (currentSection && trimmedLine.includes("=")) {
       const equalsIndex = trimmedLine.indexOf("=");
       const key = trimmedLine.substring(0, equalsIndex).trim();
-      let valueAndComment = trimmedLine.substring(equalsIndex + 1).trim();
+      const valueAndComment = trimmedLine.substring(equalsIndex + 1).trim();
 
       // Check for comment
       let value = valueAndComment;

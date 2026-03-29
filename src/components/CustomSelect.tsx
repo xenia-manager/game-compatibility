@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useTheme } from "./ThemeProvider";
 
 interface SelectOption {
   value: number | string;
@@ -21,7 +20,6 @@ export default function CustomSelect({
   onChange,
   className = "",
 }: CustomSelectProps) {
-  const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -62,11 +60,7 @@ export default function CustomSelect({
 
       {isOpen && (
         <div
-          className={`absolute z-50 w-full mt-1 rounded-xl overflow-hidden backdrop-blur-xl ${
-            theme === "dark"
-              ? "mica-card-dark border border-gray-700"
-              : "mica-card-light border border-gray-200"
-          }`}
+          className="absolute z-50 w-full mt-1 rounded-xl overflow-hidden backdrop-blur-xl mica-card border border-[var(--border-color)]"
           role="listbox"
         >
           <div className="max-h-60 overflow-y-auto">
@@ -77,12 +71,8 @@ export default function CustomSelect({
                 onClick={() => handleSelect(option.value)}
                 className={`w-full px-4 py-3 text-left transition-colors duration-150 ${
                   value === option.value
-                    ? theme === "dark"
-                      ? "bg-xbox-green/20 text-xbox-green"
-                      : "bg-xbox-green/20 text-xbox-button"
-                    : theme === "dark"
-                    ? "text-fluent-neutral-dark hover:bg-white/5"
-                    : "text-gray-900 hover:bg-black/5"
+                    ? "bg-xbox-green/20 text-xbox-green"
+                    : "text-fluent-primary hover:bg-[var(--hover-bg)]"
                 }`}
                 role="option"
                 aria-selected={value === option.value}

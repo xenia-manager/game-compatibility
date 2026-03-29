@@ -78,9 +78,14 @@ html {
 }
 
 body {
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   line-height: 1.6;
+}
+
+/* Theme-aware background using CSS variables */
+body.min-h-screen {
+  background-color: var(--bg-primary);
 }
 
 /* Smooth theme transitions for mica elements */
@@ -90,7 +95,56 @@ body {
 .mica-surface-dark,
 .mica-surface-light,
 .input-fluent {
-  transition: all 0.4s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme CSS variables - automatically update when theme class changes */
+:root {
+  /* Default to dark theme */
+  --bg-primary: var(--color-dark-primary);
+  --bg-secondary: var(--color-dark-secondary);
+  --bg-accent: var(--color-dark-accent);
+  --bg-tertiary: var(--color-dark-tertiary);
+  --text-primary: var(--color-fluent-neutral-dark);
+  --text-secondary: var(--color-fluent-neutral);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-text: white;
+  --input-placeholder: rgba(255, 255, 255, 0.5);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --hover-border: rgba(255, 255, 255, 0.1);
+  --table-border: rgba(255, 255, 255, 0.08);
+  --table-hover: rgba(255, 255, 255, 0.05);
+  --scrollbar-track: rgba(255, 255, 255, 0.05);
+  --scrollbar-thumb-border: rgba(255, 255, 255, 0.1);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-border: rgba(255, 255, 255, 0.2);
+  --badge-secondary-bg: rgba(255, 255, 255, 0.1);
+}
+
+/* Light theme overrides */
+.light {
+  --bg-primary: var(--color-light-primary);
+  --bg-secondary: var(--color-light-secondary);
+  --bg-accent: var(--color-light-accent);
+  --bg-tertiary: var(--color-light-tertiary);
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --input-bg: rgba(0, 0, 0, 0.05);
+  --input-border: rgba(0, 0, 0, 0.1);
+  --input-text: #333333;
+  --input-placeholder: rgba(0, 0, 0, 0.5);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+  --hover-border: rgba(0, 0, 0, 0.1);
+  --table-border: rgba(0, 0, 0, 0.08);
+  --table-hover: rgba(0, 0, 0, 0.05);
+  --scrollbar-track: rgba(0, 0, 0, 0.05);
+  --scrollbar-thumb-border: rgba(0, 0, 0, 0.05);
+  --btn-secondary-bg: rgba(0, 0, 0, 0.05);
+  --btn-secondary-border: rgba(0, 0, 0, 0.1);
+  --badge-secondary-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* Fluent Mica background effect */
@@ -109,7 +163,23 @@ body {
   backdrop-filter: blur(80px);
 }
 
-/* Mica card effect - Dark mode */
+/* Mica card effect - uses CSS variables for theme colors */
+.mica-card {
+  backdrop-filter: blur(40px) saturate(120%);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.dark .mica-card {
+  background: rgba(31, 31, 31, 0.6);
+}
+
+.light .mica-card {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Legacy classes for backward compatibility */
 .mica-card-dark {
   background: rgba(31, 31, 31, 0.6);
   backdrop-filter: blur(40px) saturate(120%);
@@ -117,7 +187,6 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* Mica card effect - Light mode */
 .mica-card-light {
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(40px) saturate(120%);
@@ -125,14 +194,28 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
-/* Mica surface - Dark mode */
+/* Mica surface - uses CSS variables for theme colors */
+.mica-surface {
+  backdrop-filter: blur(30px);
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.dark .mica-surface {
+  background: rgba(20, 20, 20, 0.5);
+}
+
+.light .mica-surface {
+  background: rgba(245, 245, 245, 0.5);
+}
+
+/* Legacy classes for backward compatibility */
 .mica-surface-dark {
   background: rgba(20, 20, 20, 0.5);
   backdrop-filter: blur(30px);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Mica surface - Light mode */
 .mica-surface-light {
   background: rgba(245, 245, 245, 0.5);
   backdrop-filter: blur(30px);
@@ -227,19 +310,30 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Fluent input styles - Dark mode */
+/* Fluent input styles - uses CSS variables for theme colors */
 .input-fluent {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
   border-radius: 12px;
   padding: 14px 16px;
-  color: white;
+  color: var(--input-text);
   transition: all 0.2s ease;
   font-size: 1rem;
   width: 100%;
   backdrop-filter: blur(20px);
 }
 
+.input-fluent:focus {
+  outline: none;
+  border-color: var(--color-xbox-green);
+  box-shadow: 0 0 0 3px rgba(119, 185, 0, 0.3);
+}
+
+.input-fluent::placeholder {
+  color: var(--input-placeholder);
+}
+
+/* Legacy input-fluent theme classes for backward compatibility */
 .dark .input-fluent {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -253,16 +347,6 @@ body {
   backdrop-filter: blur(20px);
 }
 
-.input-fluent:focus {
-  outline: none;
-  border-color: var(--color-xbox-green);
-  box-shadow: 0 0 0 3px rgba(119, 185, 0, 0.3);
-}
-
-.input-fluent::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
 .dark .input-fluent::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
@@ -271,13 +355,13 @@ body {
   color: rgba(0, 0, 0, 0.5);
 }
 
-/* Fluent text styles */
+/* Fluent text styles - uses CSS variables */
 .text-fluent-primary {
-  color: var(--color-fluent-neutral-dark);
+  color: var(--text-primary);
 }
 
 .text-fluent-secondary {
-  color: var(--color-fluent-neutral);
+  color: var(--text-secondary);
 }
 
 /* Gradient text */
@@ -289,36 +373,23 @@ body {
   font-weight: 700;
 }
 
-/* Custom scrollbar - Fluent style */
+/* Custom scrollbar - Fluent style with CSS variables */
 ::-webkit-scrollbar {
   width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--scrollbar-track);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-xbox-green);
   border-radius: 10px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
+  border: 3px solid var(--scrollbar-thumb-border);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-xbox-hover);
-}
-
-.light ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-.light ::-webkit-scrollbar-thumb {
-  background: var(--color-xbox-green);
-  border: 3px solid rgba(0, 0, 0, 0.05);
-}
-
-.light ::-webkit-scrollbar-thumb:hover {
   background: var(--color-xbox-hover);
 }
 
@@ -373,9 +444,9 @@ h3 {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
-/* Smooth transitions for theme changes */
-* {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+/* Theme transitions - applied to specific elements for better performance */
+.theme-transition {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Better focus styles for accessibility */
@@ -384,14 +455,26 @@ h3 {
   outline-offset: 2px !important;
 }
 
-/* Improved button variants */
+/* Improved button variants - uses CSS variables */
 .btn-secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--btn-secondary-border);
+}
+
+.btn-secondary:hover {
+  background: var(--hover-bg);
+  color: var(--text-primary);
+}
+
+/* Legacy btn-secondary theme classes */
+.dark .btn-secondary {
   background: rgba(255, 255, 255, 0.1);
   color: var(--color-fluent-neutral-dark);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.btn-secondary:hover {
+.dark .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.2);
   color: white;
 }
@@ -438,10 +521,11 @@ h3 {
 }
 
 .badge-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--color-fluent-neutral-dark);
+  background: var(--badge-secondary-bg);
+  color: var(--text-primary);
 }
 
+/* Legacy badge-secondary theme classes */
 .light .badge-secondary {
   background: rgba(0, 0, 0, 0.1);
   color: #333;

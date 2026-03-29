@@ -1,7 +1,5 @@
 "use client";
 
-import { useTheme } from "./ThemeProvider";
-
 interface StateFilter {
   value: string;
   label: string;
@@ -66,8 +64,6 @@ export default function StateFilterBar({
   showOptimizedOnly,
   onShowOptimizedOnlyChange,
 }: StateFilterBarProps) {
-  const { theme } = useTheme();
-
   return (
     <div className="flex justify-between items-center mb-3">
       <div className="flex flex-wrap gap-1.5">
@@ -112,9 +108,7 @@ export default function StateFilterBar({
         className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border flex items-center gap-1.5 ${
           showOptimizedOnly
             ? "bg-[#107c10] text-white border-[#107c10] shadow-lg scale-105"
-            : theme === "dark"
-              ? "bg-dark-secondary text-fluent-neutral border-gray-700 hover:bg-white/10"
-              : "bg-light-secondary text-gray-600 border-gray-300 hover:bg-black/5"
+            : "bg-[var(--bg-secondary)] text-fluent-secondary border-gray-700 hover:bg-[var(--hover-bg)]"
         }`}
         title="Show only games that have optimized emulator settings available"
       >
@@ -126,9 +120,7 @@ export default function StateFilterBar({
           style={{
             color: showOptimizedOnly
               ? "#ffffff"
-              : theme === "dark"
-                ? "#9CA3AF"
-                : "#6B7280",
+              : "var(--text-secondary)",
           }}
         >
           {optimizedCount}
