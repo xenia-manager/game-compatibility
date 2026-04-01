@@ -229,15 +229,15 @@ export default function GameCompatibilityTable({
                     isExpanded ? "bg-[var(--table-hover)]" : "hover:bg-[var(--table-hover)]"
                   }`}
                 >
-                  <td className="py-3 px-2 sm:px-4 align-top">
+                  <td className="py-3 px-2 sm:px-4 align-middle">
                     <code className="font-mono text-[10px] sm:text-sm text-fluent-secondary whitespace-nowrap">
                       {game.id}
                     </code>
                   </td>
-                  <td className="py-3 px-2 sm:px-4 max-w-[60px] sm:max-w-none align-top">
+                  <td className="py-3 px-2 sm:px-4 max-w-[60px] sm:max-w-none align-middle">
                     <button
                       onClick={() => handleTitleClick(game.id, game.issue)}
-                      className={`text-left font-medium transition-colors duration-200 text-xs sm:text-sm block break-words line-clamp-3 ${
+                      className={`text-left font-medium transition-colors duration-200 text-xs sm:text-sm break-words line-clamp-3 ${
                         hasSettings
                           ? "text-xbox-green hover:text-xbox-accent cursor-pointer"
                           : "text-fluent-primary"
@@ -252,7 +252,7 @@ export default function GameCompatibilityTable({
                       {game.title}
                     </button>
                   </td>
-                  <td className="py-3 px-3 sm:px-4">
+                  <td className="py-3 px-3 sm:px-4 align-middle">
                     <span
                       className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold"
                       style={{
@@ -276,12 +276,12 @@ export default function GameCompatibilityTable({
                       <span className="hidden sm:inline">{getStateLabel(game.state)}</span>
                     </span>
                   </td>
-                  <td className="py-3 px-3 sm:px-4 hidden sm:table-cell">
+                  <td className="py-3 px-3 sm:px-4 hidden sm:table-cell align-middle">
                     <span className="text-xs sm:text-sm text-fluent-secondary">
                       {formatDate(game.updated)}
                     </span>
                   </td>
-                  <td className="py-3 px-3 sm:px-4">
+                  <td className="py-3 px-3 sm:px-4 align-middle">
                     <a
                       href={game.url}
                       target="_blank"
