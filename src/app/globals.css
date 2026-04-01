@@ -179,6 +179,19 @@ body.min-h-screen {
   background: rgba(255, 255, 255, 0.6);
 }
 
+/* Glass card effect (from Website project) */
+.glass-card {
+  background: var(--color-dark-secondary);
+  backdrop-filter: blur(40px) saturate(120%);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.light .glass-card {
+  background: var(--color-light-secondary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
 /* Legacy classes for backward compatibility */
 .mica-card-dark {
   background: rgba(31, 31, 31, 0.6);
